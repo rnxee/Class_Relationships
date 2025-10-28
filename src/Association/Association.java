@@ -21,7 +21,7 @@ class Job {
     }
 
     public String getJobInfo(){
-        return "Association.Job Title: "+ jobTitle +
+        return "Job Title: "+ jobTitle +
                 "\nCompany: "+ company +
                 "\nLocation: "+ location +
                 "\nSalary: " + salary +
@@ -31,6 +31,7 @@ class Job {
 
 class Jobseeker {
     private String name;
+    private Job job;
 
     public Jobseeker(String name) {
         this.name = name;
@@ -41,7 +42,17 @@ class Jobseeker {
     }
     // Association.Jobseeker applies for a job
     public void applyForJob(Job job) {
+        this.job = job;
         System.out.println("\n" + name + " has applied for the job: " + job.getJobTitle());
+    }
+    public void displayAppliedJob() {
+        if (job != null) {
+            System.out.println("\n" + name + "'s Applied Job Details:");
+            System.out.println(job.getJobInfo());
+        } else {
+            System.out.println("\n" + name + " has not applied for any job yet.");
+            return;
+        }
     }
 }
 
@@ -59,9 +70,10 @@ public class Association {
         Association association = new Association();
 
         while (true) {
-            System.out.println("\n--- Association.Job Portal ---");
+            System.out.println("\n--- Job Portal ---");
             System.out.println("1. View all Jobs");
-            System.out.println("2. Apply for a Association.Job");
+            System.out.println("2. Apply for a Job");
+            System.out.println("3. Display Applied Job");
             System.out.println("0. Exit");
             System.out.print("Select an option: ");
             int choice = sc.nextInt();
@@ -74,8 +86,11 @@ public class Association {
 
                 case 2:
                     association.applyForJob(seeker, job1, job2, sc);
-                    sc.close();
-                    return;
+                    break;
+
+                case 3:
+                    seeker.displayAppliedJob();
+                    break;
 
                 case 0:
                     System.out.println("Exiting...");
@@ -88,14 +103,14 @@ public class Association {
 
     private void viewAllJobs(Jobseeker seeker, Job job1, Job job2) {
         System.out.println("\nAvailable Jobs: ");
-        System.out.println("1. ");
+        System.out.print("\n1. ");
         seeker.viewJob(job1);
-        System.out.println("2. ");
+        System.out.print("\n2. ");
         seeker.viewJob(job2);
     }
 
     private void applyForJob(Jobseeker seeker, Job job1, Job job2, Scanner sc) {
-        System.out.print("Enter Association.Job number to apply (1 or 2): ");
+        System.out.print("Enter Job number to apply (1 or 2): ");
         int jobChoice = sc.nextInt();
         sc.nextLine();
 
@@ -104,7 +119,7 @@ public class Association {
         } else if (jobChoice == 2) {
             seeker.applyForJob(job2);
         } else {
-            System.out.println("Invalid Association.Job selection!");
+            System.out.println("Invalid Job selection!");
         }
     }
 
