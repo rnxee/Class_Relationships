@@ -13,7 +13,7 @@ class JobSeeker {
 
     public String getResume() {
         if (this.resume != null) {
-            return this.resume.toString();
+            return this.resume.getResume();
         } else {
             return "\nNo resume attached.";
         }
@@ -42,8 +42,7 @@ class JobSeeker {
         /* Composition occurs here:
            The jobseeker creates and owns the resume object
            The jobseeker cannot exist independently without its creator. */
-        Resume newResume = new Resume(education, skills, experience);
-        this.resume = newResume; // Resume is now part of the JobSeeker
+        this.resume = new Resume(education, skills, experience); // Resume is now part of the JobSeeker
         System.out.println("Resume created and attached to " + this.name + ".");
     }
 }
@@ -53,30 +52,15 @@ class Resume {
     private String skills;
     private int experience;
 
-    public String getEducation() {
-        return education;
-    }
-    public String getSkills() {
-        return skills;
-    }
-    public int getExperience() {
-        return experience;
-    }
     public Resume(String education, String skills, int experience) {
         this.education = education;
         this.skills = skills.toLowerCase();
         this.experience = experience;
     }
-    @Override
-    public String toString() {
-        String format = "%-15s %s%n";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format(format, "Education:", this.education));
-        sb.append(String.format(format, "Skills:", this.skills));
-        sb.append(String.format(format, "Experience:", this.experience + " Years"));
-
-        return sb.toString();
+    public String getResume() {
+        return "Education:   " + education +
+                "\nSkills:      " + skills +
+                "\nExperience:  " + experience;
     }
 }
 
@@ -95,16 +79,19 @@ public class Composition {
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
             int choice = sc.nextInt();
+            sc.nextLine();
 
             switch (choice) {
                 case 1:
                     System.out.println("\nMy Resume Details:");
                     System.out.println(seeker.getResume());
+                    sc.nextLine();
                     break;
 
                 case 2:
                     // Seeker object calls the method to create Resume object
                     seeker.createResume();
+                    sc.nextLine();
                     break;
 
                 case 0:

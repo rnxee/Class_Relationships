@@ -47,12 +47,6 @@ class Jobseeker {
         System.out.println("\nAvailable Job:");
         System.out.println("\nJob 1:\n" + job1.getJobInfo());
         System.out.println("\nJob 2:\n" + job2.getJobInfo());
-        System.out.println(job1.getJobInfo());
-        System.out.println(job2.getJobInfo());
-        /* Main Class interacts with Job Class this shows an Association relationship */
-        System.out.println("\nAvailable Jobs:");
-        System.out.println("\nJob 1:\n" + job1.getJobInfo());
-        System.out.println("\nJob 2:\n" + job2.getJobInfo());
     }
 
     /*  Aggregation Relationship happens here because we're passing the job object to the Jobseeker class/object,
@@ -62,15 +56,16 @@ class Jobseeker {
         System.out.println("\n" + name + " has applied for the job: " + job.getJobTitle());
     }
 
-    public void showAppliedJob() {
+    public void showAppliedJob(Scanner sc) {
         if (job != null) {
             /* in here the seeker object can now directly access the job's info,
              because he now has a relationship with that object */
             System.out.println("\n" + name + "'s Applied Job Details:");
             System.out.println(job.getJobInfo());
+            sc.nextLine();
         } else {
             System.out.println("\n" + name + " has not applied for any job yet.");
-            return;
+            sc.nextLine();
         }
     }
 }
@@ -108,15 +103,17 @@ public class AssociationAggregation {
 
                     if (jobChoice == 1) {
                         seeker.applyForJob(job1);
+                        sc.nextLine();
                     } else if (jobChoice == 2) {
                         seeker.applyForJob(job2);
+                        sc.nextLine();
                     } else {
                         System.out.println("Invalid Job selection!");
                     }
                     break;
 
                 case 3:
-                    seeker.showAppliedJob();
+                    seeker.showAppliedJob(sc);
                     break;
 
                 case 0:
